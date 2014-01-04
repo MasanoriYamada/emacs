@@ -1,0 +1,44 @@
+#ifndef SAMPLE_H
+#define SAMPLE_H
+
+#include <cstdlib>
+#include "SortStrategy.h"
+
+
+// ’¥µ’¥ó’¥×’¥ë’¥¯’¥é’¥¹
+class Sample{
+public:
+  // ’¥³’¥ó’¥¹’¥È’¥é’¥¯’¥¿
+  Sample(ISortStrategy* sortStrategy, unsigned int dataMax)
+  {
+    mSortStrategy = sortStrategy;
+    mDataNum = dataMax;
+    mData = static_cast<int*>( std::calloc( dataMax, sizeof(int) ) );
+  }
+  // ’¥Ç’¥¹’¥È’¥é’¥¯’¥¿
+  ~Sample()
+  {
+    std::free( mData );
+    delete mSortStrategy;
+  }
+
+
+  // ’¥Ç’¡¼’¥¿’¥»’¥Ã’¥È
+  void SetData(int index, int data)
+  {
+    mData[index] = data;
+  }
+  // ’¥½’¡¼’¥È
+  void Sort()
+  {
+    mSortStrategy->Sort( mData, mDataNum );
+  }
+
+
+private:
+  ISortStrategy*      mSortStrategy;  // ’¥½’¡¼’¥È’Àï’Î¬
+  unsigned int        mDataNum;       // ’¥Ç’¡¼’¥¿’¸Ä’¿ô
+  int*                mData;          // ’¥Ç’¡¼’¥¿’ÇÛ’Îó
+};
+
+#endif

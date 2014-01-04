@@ -1,0 +1,13 @@
+#!/bin/bash
+## plot from fit parametor
+
+READDIR
+READFILE
+
+cat $(READDIR)/$(READFILE) | awk 
+
+
+function 1g1y_pot(x,b1,b2,b3,b4,b5){
+
+return ypot
+}
