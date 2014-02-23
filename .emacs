@@ -11,8 +11,27 @@
 
 
 
-
 ;;;; global key bind
+;;-> =>c-l
+(define-key global-map (kbd "C-l") nil)
+(define-key global-map (kbd "C-l") 'forward-char)
+;;<- =>c-k
+(define-key global-map (kbd"C-k") nil)
+(define-key global-map (kbd"C-k") 'backward-char)
+;;-> =>c-;
+(define-key global-map (kbd "C-;") nil)
+(define-key global-map (kbd "C-;") 'forward-word)
+;;<- =>c-j
+(define-key global-map (kbd"C-j") nil)
+(define-key global-map (kbd"C-j") 'backward-word)
+;;; C-h => backword
+(define-key global-map (kbd "C-h") nil)
+(define-key global-map (kbd "C-h") 'delete-backward-char)
+;;kill =>c-f
+(define-key global-map (kbd"C-f") nil)
+(define-key global-map (kbd"C-f") 'kill-line)
+;;kill =>c-f
+(define-key global-map (kbd"C-z") 'undo)
 ;;goto-line => c-x l
 (define-key global-map "\C-xl" 'goto-line)
 ;; C-c c => compile
@@ -52,6 +71,8 @@
 ;;;set defalt of  *UTF-8 LF*。
 (prefer-coding-system 'utf-8-unix)
 (set-default-coding-systems 'utf-8-unix)
+;;; 起動時の画面はいらない
+(setq inhibit-startup-message t)
 ;;; set color (not need after ver 22)
 (global-font-lock-mode t)
 ;;;not make back up file ~ #
@@ -83,6 +104,19 @@
 ;;; add chomd excute at #! (sqript)
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
+;;;全角空白とタブに色を付ける
+        (defface my-face-b-1 '((t (:background "gray"))) nil)
+        (defface my-face-b-2 '((t (:background "linen"))) nil)
+        (defvar my-face-b-1 'my-face-b-1)
+        (defvar my-face-b-2 'my-face-b-2)
+        (defadvice font-lock-mode (before my-font-lock-mode ())
+          (font-lock-add-keywords
+           major-mode
+           '(("　" 0 my-face-b-1 append)
+             ("\t" 0 my-face-b-2 append)
+             )))
+        (ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+        (ad-activate 'font-lock-mode)
 ;;;emacs を起動したら一番上のwindowに来るように設定
 (if (eq window-system 'ns)
 (x-focus-frame nil))
@@ -93,10 +127,13 @@
 ;PHONY: check-syntax
 ;check-syntax:
 ;    $(CXX) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
+;;;タブを利用する
 (add-to-list 'load-path "~/.emacs.d/tabbar")
 (require 'tabbar)
 (tabbar-mode 1)
-
+;; 例: 全バッファを一つのグループにしまう
+(setq tabbar-buffer-groups-function (lambda () (list "Buffers")))
+;;
 (defun my-tabbar-buffer-list ()
   (delq nil
         (mapcar #'(lambda (b)
