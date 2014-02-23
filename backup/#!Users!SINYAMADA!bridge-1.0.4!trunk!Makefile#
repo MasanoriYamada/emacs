@@ -1,0 +1,451 @@
+# For GNU MAKE
+
+### User modification part ########################### START ###
+
+#####  OPTIONS  ################################################
+
+use_mpi = no
+use_optimize = yes
+use_lime_library = no
+use_debug = no
+
+# advanced option.(Recommended to be set to yes)
+use_test = yes
+
+target = PC_GCC   # PC using GNU c++
+#target = PC_INTEL # PC using intel compiler
+#target = KEKSR    # Hitachi SR16000 at KEK (KEK System-A)
+#target = KEKBGQ   # Blue Gene/Q at KEK (KEK System-B)
+#target = YITPSR   # Hitachi SR16000 at YITP
+#target = FX10     # Fujitsu FX10 at Univ. of Tokyo
+
+################################################################
+
+
+# #####  GNU C/C++  ##############################################
+
+# ifeq ($(strip $(target)),PC_GCC)
+
+# ifeq ($(use_mpi),yes)
+# CXX = openmpic++
+# #CXX = mpic++
+# else
+# CXX = g++
+# endif
+
+# ifeq ($(use_debug),yes)
+# CXXFLAGS = -g -O3 -Wall -Wno-unused
+# CPP_DEFS += -DDEBUG
+# else
+# CXXFLAGS = -O3
+# CPP_DEFS += -DRELEASE
+# endif
+
+# LD = $(CXX)
+# LDFLAGS =
+# LDLIBS = -lm $(EXTRA_LIBS)
+
+# CXXDEP = $(CXX)
+# CXXDEPFLAGS = -MM
+
+# CONFIGFLAGS = CC=gcc 
+# CONFIGFLAGS += CFLAGS=-O3
+
+# TARGET_MACHINE = PC_GNU
+
+# endif
+
+#####  Intel C++  ##############################################
+
+ifeq ($(strip $(target)),PC_INTEL)
+
+ifeq ($(use_mpi),yes)
+CXX = oenmpic++
+#CXX = mpic++
+else
+CXX = icpc
+endif
+
+ifeq ($(use_debug),yes)
+CXXFLAGS = -g -O0 
+CPP_DEFS += -DDEBUG
+else
+CXXFLAGS = -fast
+#CXXFLAGS = -O3
+CPP_DEFS += -DRELEASE
+endif
+
+LD = $(CXX)
+LDFLAGS = 
+LDLIBS = -lm $(EXTRA_LIBS)
+
+CXXDEP = $(CXX)
+CXXDEPFLAGS = -MM
+
+CONFIGFLAGS = CC=icc
+CONFIGFLAGS += CFLAGS=-O3
+
+TARGET_MACHINE = PC_INTEL
+
+endif
+
+#####  SR16000 @KEK (MPI+SMP) or Single ########################
+
+ifeq ($(strip $(target)),KEKSR)
+
+ifeq ($(use_mpi),yes) 
+CXX     = mpCC    # for MPI
+else 
+CXX     = xlc++_r # for Single
+endif
+
+CXXFLAGS = -q64 -O3 -qsmp=auto
+
+LD      = $(CXX)
+LDFLAGS = -q64 -qsmp
+LDLIBS = -lm $(EXTRA_LIBS)
+
+CXXDEP = /usr/bin/gcc
+CXXDEPFLAGS = -MM -I/opt/ibmhpc/pe1103/ppe.poe/include
+
+CONFIGFLAGS  = CC=xlc_r 
+CONFIGFLAGS += CFLAGS="-q64 -O3 -qsmp=auto" 
+CONFIGFLAGS += AR="ar -X 64"
+
+TARGET_MACHINE = KEKSR 
+
+endif
+
+#####  SR16000 @YITP (MPI+SMP) or Single #######################
+
+ifeq ($(strip $(target)),YITPSR)
+
+ifeq ($(use_mpi),yes)
+CXX     = mpCC    # for MPI
+else
+CXX     = xlc++_r # for Sigle
+endif
+
+CXXFLAGS = -q64 -O3 -qsmp=auto -qarch=pwr7 -qtune=pwr7
+
+LD      = $(CXX)
+LDFLAGS        = -q64 -qsmp
+LDLIBS = -lm $(EXTRA_LIBS)
+
+CXXDEP = /usr/bin/gcc
+
+CXXDEPFLAGS = -MM -I/usr/lpp/ppe.poe/include
+
+CONFIGFLAGS  = CC=xlc_r 
+CONFIGFLAGS += CFLAGS="-q64 -O3 -qsmp=auto -qarch=pwr7 -qtune=pwr7" 
+CONFIGFLAGS += AR="ar -X 64"
+
+TARGET_MACHINE = YITPSR 
+
+endif
+
+#####  XL-C/C++ on Blue Gene/Q @KEK  ###########################
+
+ifeq ($(strip $(target)),KEKBGQ)
+
+DRIVER=/bgsys/drivers/ppcfloor
+
+CXX     = bgxlC_r
+
+CXXFLAGS =  -g -O3 -qhot -qsimd=auto -qsmp=auto -q64 \
+-I$(DRIVER) \
+-I$(DRIVER)/spi/include/kernel/cnk \
+-I$(DRIVER)/spi/include/mu/default \
+-I$(DRIVER)/comm/xl/include \
+-I/usr/local/bg/include
+
+LD      = $(CXX)
+LDFLAGS = -g -O3 -qhot -qsmp=auto -q64
+
+LDLIBS = -L$(DRIVER)/comm/xl/lib \
+-L$(DRIVER)/comm/sys/lib \
+-L$(DRIVER)/spi/lib \
+-L$(DRIVER)/bgpm/lib \
+-L/usr/local/bg/lib \
+-lm -lkek -lmpich -lopa -lmpl -lpami -lSPI_cnk \
+-lSPI -lSPI_l1p -lbgpm -lrt -lpthread -lstdc++ \
+-lcxxmpich -lm $(EXTRA_LIBS)
+
+CXXDEP = /usr/bin/gcc
+CXXDEPFLAGS = -MM -I/usr/src/kernels/2.6.32-220.7.1.el6.ppc64/include/linux/crypto
+
+CONFIGFLAGS =
+TARGET_MACHINE = KEKBGQ
+
+endif
+
+#####  FX10 @tokyo (using MPI)  ################################
+
+ifeq ($(strip $(target)),FX10)
+
+CXX      = mpiFCCpx
+CXXFLAGS = -Kfast,parallel -Xg 
+CXXFLAGS = -O0 -Xg
+
+LD       = $(CXX)
+LDFLAGS  = -Kfast,parallel -Xg 
+LDLIBS   = -lm $(EXTRA_LIBS)
+
+
+CXXDEP = $(CXX)
+CXXDEPFLAGS = -Xg -MM
+CXXDEPFLAGS = -MM -I/usr/lpp/ppe.poe/include
+
+CXXDEP = /usr/bin/gcc
+CXXDEPFLAGS = -MM
+
+CONFIGFLAGS = --host=FX10 CC=mpifccpx CFLAGS="-Kfast,parallel -Xg"
+
+TARGET_MACHINE = FX10
+
+endif
+
+#####  generic  #################################################
+
+ifndef TARGET_MACHINE
+
+ifeq ($(use_mpi),yes)
+CXX = openmpic++
+#CXX = mpic++
+else
+CXX = g++
+endif
+
+ifeq ($(use_debug),yes)
+CXXFLAGS = -g -O3 -Wall -Wno-unused
+CPP_DEFS += -DDEBUG
+else
+CXXFLAGS = -O3
+CPP_DEFS += -DRELEASE
+endif
+
+LD = $(CXX)
+LDFLAGS =
+LDLIBS = -lm $(EXTRA_LIBS)
+
+CXXDEP = $(CXX)
+CXXDEPFLAGS = -MM
+
+CONFIGFLAGS = CC=gcc 
+CONFIGFLAGS += CFLAGS=-O3
+
+TARGET_MACHINE = generic
+
+endif
+
+#####  end compiler  ############################################
+
+# source file directory
+src_dirs =  src
+src_dirs += src/Action
+src_dirs += src/CommonParameters
+src_dirs += src/Communicator
+src_dirs += src/Communicator/$(SRCCOMMUN)
+src_dirs += src/Eigen
+src_dirs += src/Field
+src_dirs += src/Field/$(SRCOPT)
+src_dirs += src/Fopr
+src_dirs += src/Fopr/$(SRCOPT)
+src_dirs += src/Force
+src_dirs += src/HMC
+src_dirs += src/Measurements/Fermion
+src_dirs += src/Measurements/Gauge
+src_dirs += src/Solver
+src_dirs += src/Smear
+src_dirs += src/Tools
+src_dirs += src/Tests
+src_dirs += src/Main
+src_dirs += src/IO
+
+# input data
+sample_conf_file = conf_04040408.txt
+data  = src/Main/parameter_rational.1_2inv_16_0.00010000_010.000
+data += src/Main/parameter_rational.1_4_16_0.00010000_010.000
+data += src/Main/test_HMC_Clover_RHMC_Nf2p1.yaml
+
+### User modification part ############################# END ###
+
+
+### System part ###################################### START ###
+# extra library option flags(default).
+SRCCOMMUN= Single
+SRCOPT= Imp
+EXTRA_INCLUDES=
+EXTRA_LIBS=
+EXTRA_LIBS_BUILD=
+
+# build directory.
+build_base_dir = build
+
+# program name
+program = $(build_base_dir)/bridge.elf
+
+# lime library setup
+ifeq ($(use_lime_library),yes)
+EXTRA_INCLUDES += -Iextra/lime-1.3.2/include
+EXTRA_INCLUDES += -Iextra/doxygen-1.7.6/include
+EXTRA_LIBS += -Lextra/lime-1.3.2/lib -llime
+EXTRA_LIBS_BUILD += extralibs-lime
+CPP_DEFS += -DUSE_LIMELIB
+endif
+
+# communicator setup
+ifeq ($(use_mpi),yes)
+SRCCOMMUN = MPI
+CPP_DEFS += -DUSE_MPI
+use_test = no
+else
+SRCCOMMUN = Single
+endif
+
+# option flag setup
+ifeq ($(use_optimize),yes)
+SRCOPT = Imp
+else
+SRCOPT = Org
+endif
+
+# test menu setup
+ifeq ($(use_test),yes)
+CPP_DEFS += -DUSE_TEST
+else
+##
+endif
+
+#
+sources = $(wildcard $(addsuffix /*.cpp, $(src_dirs)))
+objects = $(sources:%.cpp=$(build_base_dir)/%.o)
+depends = $(addsuffix .d, $(objects))
+build_dirs = $(addprefix $(build_base_dir)/, $(src_dirs))
+CPPFLAGS = $(addprefix -I, $(src_dirs))
+CPPFLAGS += $(EXTRA_INCLUDES)
+CPPFLAGS += $(CPP_DEFS)
+
+# make all.
+.PHONY: all msg
+all: msg $(build_dirs) extralibs $(program) cpdata
+
+# main target.
+$(program): $(objects)
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+
+msg:
+	@echo "----------------------------------------------------------------"
+	@echo "Compilation Environment Summary"
+	@echo
+	@echo "Options:"
+	@echo "  use_mpi          =" $(use_mpi)
+	@echo "  use_optimize     =" $(use_optimize)
+	@echo "  use_lime_library =" $(use_lime_library)
+	@echo "  use_test         =" $(use_test)
+	@echo "  use_debug        =" $(use_debug)
+	@echo "  target           =" $(target) "(" $(TARGET_MACHINE) ")"
+	@echo
+	@echo "Compiler and options:"
+	@echo "  CXX         =" $(CXX)
+	@echo "  CXXFLAGS    =" $(CXXFLAGS)
+	@echo "  LD          =" $(LD)
+	@echo "  LDFLAGS     =" $(LDFLAGS)
+	@echo "  LDLIBS      =" $(LDLIBS)
+	@echo "  CXXDEP      =" $(CXXDEP)
+	@echo "  CXXDEPFLAGS =" $(CXXDEPFLAGS)
+	@echo "  CONFIGFLAGS =" $(CONFIGFLAGS)
+	@echo "----------------------------------------------------------------"
+
+# extra library target.
+.PHONY: extralibs extralibs-lime
+
+extralibs: $(EXTRA_LIBS_BUILD)
+
+extralibs-lime: extra/lime-1.3.2/lib/liblime.a
+
+extra/lime-1.3.2/lib/liblime.a:
+	cd extra/lime-1.3.2 && ./configure $(CONFIGFLAGS) && $(MAKE)
+
+# file dependency.
+#ifeq ($(TARGET_MACHINE),PCWS)
+#$(build_base_dir)/%.o: %.cpp
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+#	$(CXX) $(CPPFLAGS) -MM $< \
+#	| sed 's|^\([^\.]*\)\.o|$(@D)/\1\.o|' > $@.d
+#else
+$(build_base_dir)/%.o: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+	$(CXXDEP) $(CPPFLAGS) $(CXXDEPFLAGS) $< \
+	| sed 's|^\([^\.]*\)\.o|$(@D)/\1\.o|' > $@.d
+#endif
+
+# make directory.
+$(build_dirs):
+	mkdir -p $@
+
+-include $(depends)
+
+# unzip sample conf. file and copy files
+.PHONY: cpdata
+cpdata:
+	if [ -e ./src/Main/$(sample_conf_file).gz ]; \
+	then gunzip -c ./src/Main/$(sample_conf_file).gz > ./$(build_base_dir)/$(sample_conf_file) ; \
+	fi
+	if [ ! -e ./$(build_base_dir)/input ]; \
+	then touch ./$(build_base_dir)/input;echo 200000 > $(build_base_dir)/input; \
+	fi
+	@for f in $(data); do \
+		f2=`basename $$f`; \
+		if [ ! -e $(build_base_dir)/$$f2 ]; then \
+			echo copy $$f; \
+			cp $$f ./$(build_base_dir); \
+		elif [ $$f -nt $(build_base_dir)/$$f2 ]; then \
+			echo update $$f; \
+			mv $(build_base_dir)/$$f2 $(build_base_dir)/$$f2.bak; \
+			cp $$f ./$(build_base_dir); \
+		else \
+			echo skip $$f; \
+		fi; \
+	done
+#	cp -rf $(Main)$(data) $(build_base_dir)
+
+# exec. test run (single ver. only)
+.PHONY: run
+run:
+	if [ -e ./build/bridge.elf ]; \
+	then cd build;./bridge.elf;cd ..; \
+	fi
+
+# generate  doxygen html files to ./docs/html
+.PHONY: doxygen
+doxygen:
+	if [ -e ./docs/doxygen.conf ]; \
+	then cd ./docs;doxygen doxygen.conf;cd ..; \
+	fi
+
+.PHONY: mkdoxygen
+mkdoxygen:
+	cd extra/doxygen-1.7.6 && ./configure && $(MAKE)
+	cd ./docs;../extra/doxygen-1.7.6/bin/doxygen doxygen.conf;cd ..; \
+
+# file clean up
+.PHONY: clean
+clean:
+	rm -rf $(program)
+	rm -rf $(build_base_dir)/src
+	rm -rf ./src/*/*~
+
+# extra file clean up 
+#.PHONY: exclean
+#exclean:
+#	
+#	
+#	
+
+################################################################################
+#        @author  <Shinji Motoki> smotoki@post.kek.jp (smotoki) 
+#                 $LastChangedBy: $
+#        @date    $LastChangedDate::                     #$
+#        @version $LastChangedRevision: $
+################################################################################

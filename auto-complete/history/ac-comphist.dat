@@ -1,4 +1,22 @@
-((("Aggregate" .
+((("require" .
+   [1 0 0 0 0 0 0])
+  ("recentf-exclude" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0])
+  ("recentf-max-saved-items" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0])
+  ("recentf" .
+   [0 0 0 0 2 0 1])
+  ("wdired-change-to-wdired-mode" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0])
+  ("wdired-mode" .
+   [0 0 0 0 0 1 0 0 0 0 0])
+  ("dired-mode-map" .
+   [0 0 0 0 0 0 0 0 0 0 0 1 0 0])
+  ("defalias" .
+   [1 0 0 0 0 0 0 0])
+  ("setq" .
+   [2 0 0 1])
+  ("Aggregate" .
    [0 0 4 5 0 0 1 0 0])
   ("get_x_scale" .
    [0 0 0 0 0 1 0 0 0 0 0])
@@ -297,4 +315,12 @@
   ("err_scale_" .
    [0 0 0 1 0 0 0 0 0 0])
   ("Iterator" .
-   [0 0 0 1 0 0 0 0])))
+   [0 0 0 1 0 0 0 0])
+  ("add-hook" .
+   [1 0 0 0 0 0 0 0])
+  ("c-mode-common-hook" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("lambda" .
+   [1 0 0 0 0 0])
+  ("flymake-mode" .
+   [1 0 0 0 0 0 0 0 0 0 0 0])))
