@@ -31,7 +31,7 @@
 (define-key global-map (kbd"C-f") nil)
 (define-key global-map (kbd"C-f") 'kill-line)
 ;;kill =>c-f
-(define-key global-map (kbd"C-z") 'undo)
+(define-key global-map (kbd"M-z") 'undo)
 ;;goto-line => c-x l
 (define-key global-map "\C-xl" 'goto-line)
 ;; C-c c => compile
@@ -147,7 +147,10 @@
                      ((buffer-live-p b) b)))
                 (buffer-list))))
 (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
-
+;;タブの移動のキーバインドの設定
+(global-set-key (kbd "C-c n") 'tabbar-forward-tab)
+(global-set-key (kbd "C-c p") 'tabbar-backward-tab)
+(global-set-key (kbd "C-c k") 'kill-buffer)
 
 ;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
