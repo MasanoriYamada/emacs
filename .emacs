@@ -9,15 +9,13 @@
 ;;ediff関連のバッファを１つのフレームにまとめる
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-
-
 ;;;; global key bind
 ;;-> =>c-l
-(define-key global-map (kbd "C-l") nil)
-(define-key global-map (kbd "C-l") 'forward-char)
+;;(define-key global-map (kbd "C-l") nil)
+;;(define-key global-map (kbd "C-l") 'forward-char)
 ;;<- =>c-k
-(define-key global-map (kbd"C-k") nil)
-(define-key global-map (kbd"C-k") 'backward-char)
+;;(define-key global-map (kbd"C-k") nil)
+;;(define-key global-map (kbd"C-k") 'backward-char)
 ;;-> =>c-;
 (define-key global-map (kbd "C-;") nil)
 (define-key global-map (kbd "C-;") 'forward-word)
@@ -28,8 +26,8 @@
 (define-key global-map (kbd "C-h") nil)
 (define-key global-map (kbd "C-h") 'delete-backward-char)
 ;;kill =>c-f
-(define-key global-map (kbd"C-f") nil)
-(define-key global-map (kbd"C-f") 'kill-line)
+;;(define-key global-map (kbd"C-f") nil)
+;;(define-key global-map (kbd"C-f") 'kill-line)
 ;;kill =>c-f
 (define-key global-map (kbd"M-z") 'undo)
 ;;goto-line => c-x l
