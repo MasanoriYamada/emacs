@@ -44,8 +44,13 @@
 (define-key mode-specific-map "a" 'align)
 ;;cua-set-rectangle-mark => C-x Enter
 (define-key global-map  "\C-x\C-m" 'cua-set-rectangle-mark)
-;;; key bind change C-d => backword (defalt back space is binding C-d in bblqcd )
+;; M-p => anything
+(define-key global-map "\M-p" 'anything)
+;;; for another machine
+;; key bind change C-d => backword (defalt back space is binding C-d in bblqcd )
 (global-set-key "\C-d" 'delete-backward-char)
+;;comannd => meta at mac
+(setq mac-command-modifier 'meta)
 
 
 ;;;; alias
@@ -165,6 +170,8 @@
 (set-face-underline 'ac-selection-face "white")
 (set-face-foreground 'ac-candidate-face "white")
 
+;;anything (全てを統べる者)
+(require 'anything-startup)
 
 ;;;align (defalat)
 (require 'align)
