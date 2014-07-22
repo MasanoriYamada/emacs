@@ -87,6 +87,8 @@
 (setq require-final-newline t)
 ;; set length of tab is 4
 (setq tab-width 4)
+;; delete sound and flash
+(setq ring-bell-function 'ignore)
 ;; use space instead of tab
 (setq indent-tabs-mode nil)
 ;; show code of new line
@@ -190,3 +192,8 @@
                                     "\\(^\\s-*\\(}\\|for\\|while\\|if\\|else\\|"
                                     "switch\\|case\\|break\\|continue\\|do\\)[ ;]\\)"
                                     ))
+;;; GDB 関連
+;;; 有用なバッファを開くモード
+(setq gdb-many-windows t)
+;;; 変数の上にマウスカーソルを置くと値を表示
+(add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
