@@ -1,2 +1,5 @@
 auto-save-list/*
 backup/*
+auto-complete/history/*
+auto-install/*
+auto-save-list
