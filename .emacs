@@ -32,6 +32,8 @@
 (define-key global-map (kbd"M-z") 'undo)
 ;;goto-line => c-x l
 (define-key global-map "\C-xl" 'goto-line)
+;; M-p =>anything
+(define-key global-map(kbd "M-p") 'anything)
 ;; C-c c => compile
 (define-key mode-specific-map "c" 'compile)
 ;; C-c d => debug mode
@@ -51,6 +53,10 @@
 (global-set-key "\C-d" 'delete-backward-char)
 ;;comannd => meta at mac
 (setq mac-command-modifier 'meta)
+
+;;;command => Meta key at mac
+(when (eq system-type 'darwin)
+  (setq ns-command-modifier (quote meta)))
 
 
 ;;;; alias
@@ -156,7 +162,8 @@
 (global-set-key (kbd "C-c n") 'tabbar-forward-tab)
 (global-set-key (kbd "C-c p") 'tabbar-backward-tab)
 (global-set-key (kbd "C-c k") 'kill-buffer)
-
+;;;anything(全てをすべるもの)
+(require 'anything-startup)
 ;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
 (require 'auto-complete-config)
@@ -171,10 +178,8 @@
 (set-face-background 'ac-selection-face "BlueViolet")
 (set-face-underline 'ac-selection-face "white")
 (set-face-foreground 'ac-candidate-face "white")
-
-;;anything (全てを統べる者)
-(require 'anything-startup)
-
+;;; migemo ローマ字のまま日本語をインクリメンタルサーチする
+(require 'migemo')
 ;;;align (defalat)
 (require 'align)
 (add-to-list 'align-rules-list
