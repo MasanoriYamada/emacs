@@ -1,6 +1,5 @@
 .DS_Store
 auto-complete/*
-auto-install/*
 auto-save-list/*
 backup/*
 elpa/*
