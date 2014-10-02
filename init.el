@@ -2,8 +2,9 @@
 ;;;; include lispのパッケージ管理関連
 ;;;;===============================================================
 
-;;;auto-installというパッケージ管理ソフトを使う。 パッケージの本体は以下のパス下で管理
+;;;ロードするパス
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install/"))
+;;;auto-installというパッケージ管理ソフトを使う。 パッケージの本体は以下のパス下で管理
 (require 'auto-install)
 
 ;;更新を確認に行くのでココをコメントアウトしないと起動に時間がかかる
@@ -151,6 +152,9 @@
 ;;; high light parenthesis
 (show-paren-mode t)
 
+;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
+(setq show-paren-style 'mixed)
+
 ;;for long parenthesis
 (setq show-paren-style 'mixed)
 
@@ -180,6 +184,11 @@
 
 ;; 自動的にバッファをリロード
 (global-auto-revert-mode 1)
+
+;;;キルリング=クリップボード化 (unavailable -nw)
+(global-set-key "\M-w" 'clipboard-kill-ring-save)
+(global-set-key "\C-w" 'clipboard-kill-region)
+(global-set-key "\C-y" 'clipboard-yank)
 
 ;;;;===============================================================
 ;;;; set function
@@ -211,26 +220,13 @@
 (global-set-key (kbd "C-c p") 'tabbar-backward-tab)
 (global-set-key (kbd "C-c k") 'kill-buffer)
 
-;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
-(require 'auto-complete-config)
-
-;; add dictionary
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-(ac-config-default)
-
-;; save history for auto-complete
-(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
-
-;;set font color in auto-complete
-(set-face-background 'ac-candidate-face "blue1")
-(set-face-background 'ac-completion-face "blue1")
-(set-face-background 'ac-selection-face "BlueViolet")
-(set-face-underline 'ac-selection-face "white")
-(set-face-foreground 'ac-candidate-face "white")
-
 ;;anything (全てを統べる者)
 (require 'anything-startup)
+
+;;マークダウンモードを追加
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+;; .mdのファイルをマークダウンモードで開く
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;;;;===============================================================
 ;;;; for programing
@@ -246,6 +242,14 @@
 (global-auto-highlight-symbol-mode t)
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'c++-mode-common-hook 'hs-minor-mode)
+
+;;;スニペット
+;;yasnippetを置いているフォルダにパスを通す
+(add-to-list 'load-path
+             (expand-file-name "~/.emacs.d/auto-install/yasnippet"))
+(require 'yasnippet)
+(yas-global-mode 1)
+
 
 ;;; ウィンドウの上部に現在の関数名を表示
 (which-function-mode 1)
@@ -285,3 +289,24 @@
 
 ;; 行末に必ず1行挿入する
 (setq require-final-newline t)
+
+;;make するときのオプションをしてい
+(setq compile-command "make ")
+
+;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
+(add-to-list 'load-path "~/.emacs.d/auto-complete")
+(require 'auto-complete-config)
+
+;; add dictionary
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+(ac-config-default)
+
+;; save history for auto-complete
+(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
+
+;;set font color in auto-complete
+(set-face-background 'ac-candidate-face "blue1")
+(set-face-background 'ac-completion-face "blue1")
+(set-face-background 'ac-selection-face "BlueViolet")
+(set-face-underline 'ac-selection-face "white")
+(set-face-foreground 'ac-candidate-face "white")
