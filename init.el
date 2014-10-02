@@ -55,12 +55,7 @@
 
 ;;goto-line => c-x l
 (define-key global-map "\C-xl" 'goto-line)
-<<<<<<< HEAD:.emacs
-;; M-p =>anything
-(define-key global-map(kbd "M-p") 'anything)
-=======
 
->>>>>>> new_branch_name:init.el
 ;; C-c c => compile
 (define-key mode-specific-map "c" 'compile)
 
@@ -89,15 +84,7 @@
 ;;comannd => meta at mac
 (setq mac-command-modifier 'meta)
 
-<<<<<<< HEAD:.emacs
-;;;command => Meta key at mac
-(when (eq system-type 'darwin)
-  (setq ns-command-modifier (quote meta)))
-
-
-=======
 ;;;;===============================================================
->>>>>>> new_branch_name:init.el
 ;;;; alias
 ;;;;===============================================================
 
@@ -232,26 +219,6 @@
 (global-set-key (kbd "C-c n") 'tabbar-forward-tab)
 (global-set-key (kbd "C-c p") 'tabbar-backward-tab)
 (global-set-key (kbd "C-c k") 'kill-buffer)
-<<<<<<< HEAD:.emacs
-;;;anything(全てをすべるもの)
-(require 'anything-startup)
-;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
-(require 'auto-complete-config)
-;; add dictionary
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-(ac-config-default)
-;; save history for auto-complete
-(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
-;;set font color in auto-complete
-(set-face-background 'ac-candidate-face "blue1")
-(set-face-background 'ac-completion-face "blue1")
-(set-face-background 'ac-selection-face "BlueViolet")
-(set-face-underline 'ac-selection-face "white")
-(set-face-foreground 'ac-candidate-face "white")
-;;; migemo ローマ字のまま日本語をインクリメンタルサーチする
-(require 'migemo')
-=======
 
 ;;anything (全てを統べる者)
 (require 'anything-startup)
@@ -290,7 +257,6 @@
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c++mode-common-hook 'google-set-c-style)
 
->>>>>>> new_branch_name:init.el
 ;;;align (defalat)
 (require 'align)
 (add-to-list 'align-rules-list
