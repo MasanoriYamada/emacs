@@ -11,10 +11,10 @@
 ;(auto-install-update-emacswiki-package-name t)
 
 ;;install-elisp.el互換モードにする
-(auto-install-compatibility-setup)
+;(auto-install-compatibility-setup)
 
 ;;ediff関連のバッファを１つのフレームにまとめる
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 
 (require 'package)
@@ -79,14 +79,14 @@
 
 ;;; for another machine
 ;; key bind change C-d => backword (defalt back space is binding C-d in bblqcd )
-(global-set-key "\C-d" 'delete-backward-char)
+;(global-set-key "\C-d" 'delete-backward-char)
 
 ;;comannd => meta at mac
 (setq mac-command-modifier 'meta)
 
-;;;;===============================================================
-;;;; alias
-;;;;===============================================================
+;;;===============================================================
+;;; alias
+;;;===============================================================
 
 ;; C-M-% =>M-qrr
 ;(defalias 'qrr 'anything-query-replace-regexp)
@@ -97,15 +97,15 @@
 (add-hook 'c-mode-common-hook
           '(lambda ()
              (define-key c-mode-base-map "\C-ca" 'align-current)
-	     (define-key c-mode-map "\C-d" 'delete-backward-char)
+ 	     (define-key c-mode-map "\C-d" 'delete-backward-char)
              ))
 ;;;when dired mode , you can change filea name use "r"(ディレクトリを開きrを押すとファイル名を編集できる)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
 
-;;;;===============================================================
-;;;; set emacs defalt
-;;;;===============================================================
+;;;===============================================================
+;;; set emacs defalt
+;;;===============================================================
 
 ;;;set defalt of  *UTF-8 LF*。
 (prefer-coding-system 'utf-8-unix)
@@ -163,20 +163,20 @@
 
 ;;; add chomd excute at #! (sqript)
 (add-hook 'after-save-hook
-          'executable-make-buffer-file-executable-if-script-p)
+	  'executable-make-buffer-file-executable-if-script-p)
 ;;;全角空白とタブに色を付ける
-        (defface my-face-b-1 '((t (:background "gray"))) nil)
-        (defface my-face-b-2 '((t (:background "linen"))) nil)
-        (defvar my-face-b-1 'my-face-b-1)
-        (defvar my-face-b-2 'my-face-b-2)
-        (defadvice font-lock-mode (before my-font-lock-mode ())
-          (font-lock-add-keywords
-           major-mode
-           '(("　" 0 my-face-b-1 append)
-             ("\t" 0 my-face-b-2 append)
-             )))
-        (ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
-        (ad-activate 'font-lock-mode)
+	(defface my-face-b-1 '((t (:background "gray"))) nil)
+	(defface my-face-b-2 '((t (:background "linen"))) nil)
+	(defvar my-face-b-1 'my-face-b-1)
+	(defvar my-face-b-2 'my-face-b-2)
+	(defadvice font-lock-mode (before my-font-lock-mode ())
+	  (font-lock-add-keywords
+	   major-mode
+	   '(("　" 0 my-face-b-1 append)
+	     ("\t" 0 my-face-b-2 append)
+	     )))
+	(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+	(ad-activate 'font-lock-mode)
 
 ;;;emacs を起動したら一番上のwindowに来るように設定
 (if (eq window-system 'ns)
@@ -186,9 +186,9 @@
 (global-auto-revert-mode 1)
 
 ;;;キルリング=クリップボード化 (unavailable -nw)
-(global-set-key "\M-w" 'clipboard-kill-ring-save)
-(global-set-key "\C-w" 'clipboard-kill-region)
-(global-set-key "\C-y" 'clipboard-yank)
+;(global-set-key "\M-w" 'clipboard-kill-ring-save)
+;(global-set-key "\C-w" 'clipboard-kill-region)
+;(global-set-key "\C-y" 'clipboard-yank)
 
 ;;;;===============================================================
 ;;;; set function
@@ -204,16 +204,16 @@
 ;;
 (defun my-tabbar-buffer-list ()
   (delq nil
-        (mapcar #'(lambda (b)
-                    (cond
-                     ;; Always include the current buffer.
-                     ((eq (current-buffer) b) b)
-                     ((buffer-file-name b) b)
-                     ((char-equal ?\  (aref (buffer-name b) 0)) nil)
-		          ((equal "*scratch*" (buffer-name b)) b) ; *scratch*バッファは表示する
+	(mapcar #'(lambda (b)
+		    (cond
+		     ;; Always include the current buffer.
+		     ((eq (current-buffer) b) b)
+		     ((buffer-file-name b) b)
+		     ((char-equal ?\  (aref (buffer-name b) 0)) nil)
+			  ((equal "*scratch*" (buffer-name b)) b) ; *scratch*バッファは表示する
 			       ((char-equal ?* (aref (buffer-name b) 0)) nil) ; それ以外の * で始まるバッファは表示しない
-                     ((buffer-live-p b) b)))
-                (buffer-list))))
+		     ((buffer-live-p b) b)))
+		(buffer-list))))
 (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
 ;;タブの移動のキーバインドの設定
 (global-set-key (kbd "C-c n") 'tabbar-forward-tab)
@@ -221,7 +221,7 @@
 (global-set-key (kbd "C-c k") 'kill-buffer)
 
 ;;anything (全てを統べる者)
-(require 'anything-startup)
+;(require 'anything-startup)
 
 ;;マークダウンモードを追加
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -245,10 +245,10 @@
 
 ;;;スニペット
 ;;yasnippetを置いているフォルダにパスを通す
-(add-to-list 'load-path
-             (expand-file-name "~/.emacs.d/auto-install/yasnippet"))
-(require 'yasnippet)
-(yas-global-mode 1)
+;(add-to-list 'load-path
+;             (expand-file-name "~/.emacs.d/auto-install/yasnippet"))
+;(require 'yasnippet)
+;(yas-global-mode 1)
 
 
 ;;; ウィンドウの上部に現在の関数名を表示
@@ -294,19 +294,19 @@
 (setq compile-command "make ")
 
 ;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
-(require 'auto-complete-config)
+;(add-to-list 'load-path "~/.emacs.d/auto-complete")
+;(require 'auto-complete-config)
 
 ;; add dictionary
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-(ac-config-default)
+;(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+;(ac-config-default)
 
 ;; save history for auto-complete
-(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
+;(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
 
 ;;set font color in auto-complete
-(set-face-background 'ac-candidate-face "blue1")
-(set-face-background 'ac-completion-face "blue1")
-(set-face-background 'ac-selection-face "BlueViolet")
-(set-face-underline 'ac-selection-face "white")
-(set-face-foreground 'ac-candidate-face "white")
+;(set-face-background 'ac-candidate-face "blue1")
+;(set-face-background 'ac-completion-face "blue1")
+;(set-face-background 'ac-selection-face "BlueViolet")
+;(set-face-underline 'ac-selection-face "white")
+;(set-face-foreground 'ac-candidate-face "white")
