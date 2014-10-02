@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 auto-save-list/*
 backup/*
 auto-complete/history/*
 auto-install/*
 auto-save-list
+=======
+.DS_Store
+auto-complete/*
+auto-save-list/*
+backup/*
+elpa/*
+src/*
+>>>>>>> new_branch_name
