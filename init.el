@@ -74,8 +74,8 @@
 ;;cua-set-rectangle-mark => C-x Enter
 (define-key global-map  "\C-x\C-m" 'cua-set-rectangle-mark)
 
-;; M-p => anything
-(define-key global-map "\M-p" 'anything)
+;; C-x p => helm
+(define-key global-map "\C-xp" 'helm-mini)
 
 ;;; for another machine
 ;; key bind change C-d => backword (defalt back space is binding C-d in bblqcd )
@@ -220,13 +220,22 @@
 (global-set-key (kbd "C-c p") 'tabbar-backward-tab)
 (global-set-key (kbd "C-c k") 'kill-buffer)
 
-;;anything (全てを統べる者)
-;(require 'anything-startup)
-
 ;;マークダウンモードを追加
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 ;; .mdのファイルをマークダウンモードで開く
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;;;;===============================================================
+;;;; helm(anythingの後継機)
+;;;;===============================================================
+;; [Facultative] Only if you have installed async.
+(add-to-list 'load-path "~/.emacs.d/async")
+
+(add-to-list 'load-path "~/.emacs.d/helm")
+(require 'helm-config)
+
+;;\M-x helm-mode ture
+(helm-mode 1)
 
 ;;;;===============================================================
 ;;;; for programing
@@ -293,20 +302,20 @@
 ;;make するときのオプションをしてい
 (setq compile-command "make ")
 
-;;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
-;(add-to-list 'load-path "~/.emacs.d/auto-complete")
-;(require 'auto-complete-config)
+;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
+(add-to-list 'load-path "~/.emacs.d/auto-complete")
+(require 'auto-complete-config)
 
-;; add dictionary
-;(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-;(ac-config-default)
+; add dictionary
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+(ac-config-default)
 
-;; save history for auto-complete
-;(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
+; save history for auto-complete
+(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
 
-;;set font color in auto-complete
-;(set-face-background 'ac-candidate-face "blue1")
-;(set-face-background 'ac-completion-face "blue1")
-;(set-face-background 'ac-selection-face "BlueViolet")
-;(set-face-underline 'ac-selection-face "white")
-;(set-face-foreground 'ac-candidate-face "white")
+;set font color in auto-complete
+(set-face-background 'ac-candidate-face "blue1")
+(set-face-background 'ac-completion-face "blue1")
+(set-face-background 'ac-selection-face "BlueViolet")
+(set-face-underline 'ac-selection-face "white")
+(set-face-foreground 'ac-candidate-face "white")
