@@ -44,7 +44,7 @@
 
 ;;; C-h => backword
 (define-key global-map (kbd "C-h") nil)
-(define-key global-map (kbd "C-h") 'delete-backward-char)
+(keyboard-translate ?\C-h ?\C-?)
 
 ;;kill =>c-f
 ;;(define-key global-map (kbd"C-f") nil)
@@ -319,3 +319,8 @@
 (set-face-background 'ac-selection-face "BlueViolet")
 (set-face-underline 'ac-selection-face "white")
 (set-face-foreground 'ac-candidate-face "white")
+
+
+;expand region (C-=で選択範囲をいい感じに広げる)
+(require 'expand-region)
+(define-key global-map "\C-c\C-m"  'er/expand-region)
