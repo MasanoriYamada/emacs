@@ -341,5 +341,5 @@
 (setq c-hungry-delete-key t)
 
 ;expand region (C-iで選択範囲をいい感じに広げる)
+;tab連打
 (require 'expand-region)
-(define-key global-map "\C-i"  'er/expand-region)
