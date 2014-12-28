@@ -63,7 +63,7 @@
 (define-key mode-specific-map "d" 'gdb)
 
 ;; C-c s => shell
-(define-key mode-specific-map "s" 'shell)
+(define-key mode-specific-map "s" 'ansi-term)
 
 ;; C-c w => delete whitespace
 (define-key mode-specific-map "w" 'delete-trailing-whitespace)
@@ -237,6 +237,16 @@
 ;;\M-x helm-mode ture
 (helm-mode 1)
 
+;======================================================================
+; magit
+;======================================================================
+(add-to-list 'load-path "~/.emacs.d/magit")
+(require 'magit)
+;; (global-set-key "\C-c g" 'magit-status)
+(define-key global-map (kbd "C-c g") 'magit-status)
+(require 'git-gutter)
+(global-git-gutter-mode t)
+
 ;;;;===============================================================
 ;;;; for programing
 ;;;;===============================================================
@@ -258,6 +268,10 @@
 ;             (expand-file-name "~/.emacs.d/auto-install/yasnippet"))
 ;(require 'yasnippet)
 ;(yas-global-mode 1)
+
+;;;ポップイン
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
 
 
 ;;; ウィンドウの上部に現在の関数名を表示
@@ -320,7 +334,12 @@
 (set-face-underline 'ac-selection-face "white")
 (set-face-foreground 'ac-candidate-face "white")
 
+;括弧を使った時に自動で改行
+(setq c-auto-newline t)
+
+;空白を一発削除
+(setq c-hungry-delete-key t)
 
 ;expand region (C-=で選択範囲をいい感じに広げる)
 (require 'expand-region)
-(define-key global-map "\C-c\C-m"  'er/expand-region)
+(define-key global-map "\C-m"  'er/expand-region)
