@@ -3,3 +3,4 @@ auto-save-list/*
 backup/*
 elpa/*
 src/*
+ac-comphist.dat

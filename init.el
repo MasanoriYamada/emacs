@@ -232,13 +232,7 @@
 ;;;;===============================================================
 ;;;; helm(anythingの後継機)
 ;;;;===============================================================
-;; [Facultative] Only if you have installed async.
-(add-to-list 'load-path "~/.emacs.d/async")
-
-(add-to-list 'load-path "~/.emacs.d/helm")
 (require 'helm-config)
-
-;;\M-x helm-mode ture
 (helm-mode 1)
 
 ;======================================================================
@@ -321,9 +315,6 @@
 ;; auto-complete
 (require 'auto-complete-config)
 (global-auto-complete-mode t);yasnippetと共存するために必要
-
-; save history for auto-complete
-(setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
 
 ;set font color in auto-complete
 (set-face-background 'ac-candidate-face "blue1")
