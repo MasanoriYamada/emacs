@@ -83,6 +83,9 @@
 ;;; set color (not need after ver 22)
 (global-font-lock-mode t)
 
+;;; *.~ とかのバックアップファイルを作らない
+(setq make-backup-files nil)
+
 ;;; create auto-save file in ~/.emacs.d/backup
 ;; backupから復元したいときはM-x recover-file その後元ファイルを指定すれば良い
 (setq auto-save-file-name-transforms
