@@ -1,5 +1,4 @@
 強制的に  *UTF-8 LF*。
-backspace C-h
 
 キーバインド
 
@@ -12,12 +11,13 @@ backspace C-h
                     v
                    (C-n)
 
-C-f kill-line
+C-h back space
+C-k kill-line
 M-x qrr 置換
-C-c c コンパイル
+C-c c コンパイル (後にC-x ` でコンパイルエラー箇所に飛ぶ)
 C-c d デバッグ
 C-x p helm(全てを統一するもの)
-C-x enter 短冊選択
+C-x enter 短冊選択 (M-nで連番生成)
 C-x l ラインに移動
 C-c w 無駄な空白を削除
 C-c a コメントや空白を含めて美しく整形(かなり強力)
@@ -28,9 +28,12 @@ C-x b buffer 切り替え
 C-c g gitを利用する
 TAB programing中にいい感じに補完する(yasnippet)
 
+~/.emacs.d/backup/ に編集中のファイルのバックアップが自動作成
+backupから復元したいときはM-x recover-file その後元ファイルを指定すれば良い
+
 byte compile
 C-x dでdiredモードにして
-mでチェックを付けた後にBで一括バイトコンパイル
+でチェックを付けた後にBで一括バイトコンパイル
 
 MELPA
 http://melpa.milkbox.net/#/

@@ -2,21 +2,7 @@
 ;;;; include lispのパッケージ管理関連
 ;;;;===============================================================
 
-;;;ロードするパス
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install/"))
-;;;auto-installというパッケージ管理ソフトを使う。 パッケージの本体は以下のパス下で管理
-(require 'auto-install)
-
-;;更新を確認に行くのでココをコメントアウトしないと起動に時間がかかる
-;(auto-install-update-emacswiki-package-name t)
-
-;;install-elisp.el互換モードにする
-;(auto-install-compatibility-setup)
-
-;;ediff関連のバッファを１つのフレームにまとめる
-;(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-
+;;;;パッケージ管理ソフト elpaを利用 //packageのライブラリとして非公式のmelpaとmarmaladeを利用
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -25,14 +11,6 @@
 ;;;;===============================================================
 ;;;; global key bind
 ;;;;===============================================================
-
-;;-> =>c-l
-;;(define-key global-map (kbd "C-l") nil)
-;;(define-key global-map (kbd "C-l") 'forward-char)
-
-;;<- =>c-k
-;;(define-key global-map (kbd"C-k") nil)
-;;(define-key global-map (kbd"C-k") 'backward-char)
 
 ;;-> =>c-;
 (define-key global-map (kbd "C-;") nil)
@@ -45,10 +23,6 @@
 ;;; C-h => backword
 (define-key global-map (kbd "C-h") nil)
 (keyboard-translate ?\C-h ?\C-?)
-
-;;kill =>c-f
-;;(define-key global-map (kbd"C-f") nil)
-;;(define-key global-map (kbd"C-f") 'kill-line)
 
 ;;kill =>c-f
 (define-key global-map (kbd"M-z") 'undo)
@@ -77,10 +51,6 @@
 ;; C-x p => helm
 (define-key global-map "\C-xp" 'helm-mini)
 
-;;; for another machine
-;; key bind change C-d => backword (defalt back space is binding C-d in bblqcd )
-;(global-set-key "\C-d" 'delete-backward-char)
-
 ;;comannd => meta at mac
 (setq mac-command-modifier 'meta)
 
@@ -100,8 +70,8 @@
  	     (define-key c-mode-map "\C-d" 'delete-backward-char)
              ))
 ;;;when dired mode , you can change filea name use "r"(ディレクトリを開きrを押すとファイル名を編集できる)
+(require 'dired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-
 
 ;;;===============================================================
 ;;; set emacs defalt
@@ -117,10 +87,8 @@
 ;;; set color (not need after ver 22)
 (global-font-lock-mode t)
 
-;;;not make back up file ~ #
-(setq make-backup-files nil)
-
 ;; create auto-save file in ~/.emacs.d/backup
+;; backupから復元したいときはM-x recover-file その後元ファイルを指定すれば良い
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
 
@@ -228,6 +196,9 @@
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 ;; .mdのファイルをマークダウンモードで開く
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;;;;ファイルを開くときにdired-modeを起動
+(ffap-bindings)
 
 ;;;;===============================================================
 ;;;; helm(anythingの後継機)
