@@ -320,10 +320,7 @@
 
 ;; auto-complete
 (require 'auto-complete-config)
-
-; add dictionary
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-(ac-config-default)
+(global-auto-complete-mode t);yasnippetと共存するために必要
 
 ; save history for auto-complete
 (setq ac-comphist-file "~/.emacs.d/auto-complete/history/ac-comphist.dat")
