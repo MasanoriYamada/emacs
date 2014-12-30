@@ -1,5 +1,6 @@
 .DS_Store
 backup/*
 elpa/*
+auto-save-list/*
 #*
 ac-comphist.dat

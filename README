@@ -11,29 +11,32 @@
                     v
                    (C-n)
 
-C-h back space
-C-k kill-line
-M-x qrr 置換
-C-c c コンパイル (後にC-x ` でコンパイルエラー箇所に飛ぶ)
-C-c d デバッグ
-C-x p helm(全てを統一するもの)
-C-x enter 短冊選択 (M-nで連番生成)
-C-x l ラインに移動
-C-c w 無駄な空白を削除
-C-c a コメントや空白を含めて美しく整形(かなり強力)
-r ディレクトリを開いた状態でrを押すとファイル名を編集できる
-C-x C-a 同じ単語をまとめて編集(カーソルを単語にのせて)
-C-c u いい感じに範囲指定する タイプするたびに範囲が広がる
-C-x b buffer 切り替え
-C-c g gitを利用する
-TAB programing中にいい感じに補完する(yasnippet)
-
-~/.emacs.d/backup/ に編集中のファイルのバックアップが自動作成
-backupから復元したいときはM-x recover-file その後元ファイルを指定すれば良い
+C-h 		   :back space
+C-k 		   :kill-line
+M-x qrr 	   :置換
+C-c c 		   :コンパイル (後にC-x ` でコンパイルエラー箇所に飛ぶ)
+C-c d 		   :デバッグ
+C-x p 		   :helm(全てを統一するもの)
+C-x enter 	   :短冊選択 (M-nで連番生成)
+C-x l 		   :ラインに移動
+C-c w 		   :無駄な空白を削除
+C-c a 		   :コメントや空白を含めて美しく整形(かなり強力)
+C-d r   	   :ディレクトリを開いた状態でrを押すとファイル名を編集できる
+C-x C-a 	   :同じ単語をまとめて編集(カーソルを単語にのせて)
+C-u 		   :いい感じに範囲指定する タイプするたびに範囲が広がる
+C-x b 		   :buffer 切り替え
+C-c g 		   :gitを利用する
+TAB 		   :programing中にいい感じに補完する(yasnippet)
+M-x recover-file   :セーブせずに終了したファイルの復元を行ってくれる(ファイルを指定すること)
 
 byte compile
 C-x dでdiredモードにして
 でチェックを付けた後にBで一括バイトコンパイル
 
-MELPA
-http://melpa.milkbox.net/#/
+
+============================================================
+ファイル構成
+init.el		:設定ファイル
+ac-comphist.dat :auto-completeの補完辞書が更新されていくところ
+elpa/		:拡張機能のlispの保管場所(package-installで管理されている)
+backup/ 	:全ての編集中のバックアップファイルが保存される場所
