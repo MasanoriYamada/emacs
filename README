@@ -39,4 +39,5 @@ C-x dでdiredモードにして
 init.el		:設定ファイル
 ac-comphist.dat :auto-completeの補完辞書が更新されていくところ
 elpa/		:拡張機能のlispの保管場所(package-installで管理されている)
-backup/ 	:全ての編集中のバックアップファイルが保存される場所
+backup/ 	:全ての編集中のバックアップファイルが保存される場所(ファイル自身の情報)
+auto-save-list	;全ての編集中のバックアップファイルが保存される場所(マシーンの情報)
