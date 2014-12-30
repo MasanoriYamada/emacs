@@ -340,7 +340,7 @@
 ;空白を一発削除
 (setq c-hungry-delete-key t)
 
-=;expand region (C-mで選択範囲をいい感じに広げる)
+;expand region (C-mで選択範囲をいい感じに広げる)
 (require 'expand-region)
-=(define-key global-map (kbd "C-m") nil)
-=(global-set-key (kbd "C-m") 'er/expand-region)
+(define-key global-map (kbd "C-m") nil)
+(global-set-key (kbd "C-m") 'er/expand-region)
