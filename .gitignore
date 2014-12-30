@@ -1,7 +1,5 @@
 .DS_Store
-auto-complete/*
 auto-save-list/*
-auto-complete/history/*
 backup/*
 elpa/*
 src/*

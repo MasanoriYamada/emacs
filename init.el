@@ -186,15 +186,18 @@
 (global-auto-revert-mode 1)
 
 ;;;キルリング=クリップボード化 (unavailable -nw)
-;(global-set-key "\M-w" 'clipboard-kill-ring-save)
-;(global-set-key "\C-w" 'clipboard-kill-region)
-;(global-set-key "\C-y" 'clipboard-yank)
+(global-set-key "\M-w" 'clipboard-kill-ring-save)
+(global-set-key "\C-w" 'clipboard-kill-region)
+(global-set-key "\C-y" 'clipboard-yank)
+
+;;;自動的にバッファをリロード
+(global-auto-revert-mode 1)
 
 ;;;;===============================================================
 ;;;; set function
 ;;;;===============================================================
 
-;;;タブを利用する
+;;;タブを利用する(-nw enable)
 (add-to-list 'load-path "~/.emacs.d/tabbar")
 (require 'tabbar)
 (tabbar-mode 1)
@@ -215,6 +218,7 @@
 		     ((buffer-live-p b) b)))
 		(buffer-list))))
 (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
+
 ;;タブの移動のキーバインドの設定
 (global-set-key (kbd "C-c n") 'tabbar-forward-tab)
 (global-set-key (kbd "C-c p") 'tabbar-backward-tab)
@@ -238,7 +242,7 @@
 (helm-mode 1)
 
 ;======================================================================
-; magit
+; magit(git from emacs)
 ;======================================================================
 (add-to-list 'load-path "~/.emacs.d/magit")
 (require 'magit)
@@ -263,11 +267,9 @@
 (add-hook 'c++-mode-common-hook 'hs-minor-mode)
 
 ;;;スニペット
-;;yasnippetを置いているフォルダにパスを通す
-;(add-to-list 'load-path
-;             (expand-file-name "~/.emacs.d/auto-install/yasnippet"))
-;(require 'yasnippet)
-;(yas-global-mode 1)
+(require 'yasnippet)
+(yas-global-mode 1)
+
 
 ;;;ポップイン
 (require 'popwin)
@@ -316,8 +318,7 @@
 ;;make するときのオプションをしてい
 (setq compile-command "make ")
 
-;; auto-complete (should install from http://cx4a.org/software/auto-complete/index.ja.html)
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
+;; auto-complete
 (require 'auto-complete-config)
 
 ; add dictionary
@@ -340,7 +341,7 @@
 ;空白を一発削除
 (setq c-hungry-delete-key t)
 
-;expand region (C-mで選択範囲をいい感じに広げる)
+;expand region (C-uで選択範囲をいい感じに広げる)
 (require 'expand-region)
-(define-key global-map (kbd "C-m") nil)
-(global-set-key (kbd "C-m") 'er/expand-region)
+(define-key global-map (kbd "C-u") nil)
+(global-set-key (kbd "C-u") 'er/expand-region)
