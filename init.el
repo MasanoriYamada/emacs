@@ -218,7 +218,7 @@
 ;;;最近開いたファイルを開く
 (require 'recentf-ext)
 (setq recentf-max-saved-items 100) ; 100個まで履歴として保存
-(global-set-key (kbd "C-x r") 'helm-recentf)
+(global-set-key (kbd "C-x C-r") 'helm-recentf)
 
 ;;;;===============================================================
 ;;;; helm(anythingの後継機)
