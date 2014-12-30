@@ -1,8 +1,0 @@
-#!/bin/sh
-
-case $# in
-1) E=$1;;
-*) echo 'usage: swave.sh (E[MeV])' 1>&2; exit 1;;
-esac
-
-./swave -E $E -mass 2000 -ifname sample-V.dat -solve 10.0 0.1 -Jost 8.0
