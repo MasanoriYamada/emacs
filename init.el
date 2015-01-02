@@ -9,6 +9,12 @@
 (package-initialize)
 
 ;;;;===============================================================
+;;;; テーマ
+;;;;===============================================================
+
+(load-theme 'manoj-dark t)
+
+;;;;===============================================================
 ;;;; global key bind
 ;;;;===============================================================
 
@@ -23,9 +29,6 @@
 ;;; C-h => backword
 (define-key global-map (kbd "C-h") nil)
 (keyboard-translate ?\C-h ?\C-?)
-
-;;;kill =>c-f
-(define-key global-map (kbd"M-z") 'undo)
 
 ;;;goto-line => c-x l
 (define-key global-map "\C-xl" 'goto-line)
@@ -133,18 +136,18 @@
 	  'executable-make-buffer-file-executable-if-script-p)
 
 ;;; 全角空白とタブに色を付ける
-	(defface my-face-b-1 '((t (:background "gray"))) nil)
-	(defface my-face-b-2 '((t (:background "linen"))) nil)
-	(defvar my-face-b-1 'my-face-b-1)
-	(defvar my-face-b-2 'my-face-b-2)
-	(defadvice font-lock-mode (before my-font-lock-mode ())
-	  (font-lock-add-keywords
-	   major-mode
-	   '(("　" 0 my-face-b-1 append)
-	     ("\t" 0 my-face-b-2 append)
-	     )))
-	(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
-	(ad-activate 'font-lock-mode)
+(defface my-face-b-1 '((t (:background "gray"))) nil)
+(defface my-face-b-2 '((t (:background "linen"))) nil)
+(defvar my-face-b-1 'my-face-b-1)
+(defvar my-face-b-2 'my-face-b-2)
+(defadvice font-lock-mode (before my-font-lock-mode ())
+(font-lock-add-keywords
+   major-mode
+   '(("　" 0 my-face-b-1 append)
+     ("\t" 0 my-face-b-2 append)
+     )))
+(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+(ad-activate 'font-lock-mode)
 
 ;;; emacs を起動したら一番上のwindowに来るように設定
 (if (eq window-system 'ns)
@@ -159,6 +162,11 @@
 (require 'expand-region)
 (define-key global-map (kbd "C-u") nil)
 (global-set-key (kbd "C-u") 'er/expand-region)
+
+;;;undo-tree C-x uで履歴を視覚的に
+(require 'undo-tree)
+(global-undo-tree-mode t)
+(global-set-key (kbd "C-x u") 'undo-tree-redo)
 
 ;;; 行末のスペースを保存時に削除
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -209,6 +217,7 @@
 (ffap-bindings)
 
 ;;; M-qrr 高機能な置換モード
+
 (defalias 'qrr 'query-replace-regexp)
 
 ;;;ディレクトリを開きrを押すとファイル名を編集できる)
