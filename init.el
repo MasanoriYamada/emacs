@@ -12,7 +12,7 @@
 ;;;; テーマ
 ;;;;===============================================================
 
-;(load-theme 'manoj-dark t)
+(load-theme 'manoj-dark t)
 
 ;;;;===============================================================
 ;;;; global key bind
@@ -290,6 +290,8 @@
 
 ;;; ウィンドウの上部に現在の関数名を表示
 (which-function-mode 1)
+
+;;;googleのc/c++のルールに順守
 (require 'google-c-style)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c++mode-common-hook 'google-set-c-style)
