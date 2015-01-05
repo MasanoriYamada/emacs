@@ -83,8 +83,20 @@
 ;;; 起動時の画面はいらない
 (setq inhibit-startup-message t)
 
+;;; 起動時にスクリーン最大化
+(set-frame-parameter nil 'fullscreen 'maximized)
+
 ;;; set color (not need after ver 22)
 (global-font-lock-mode t)
+
+;;; Ricty フォントの利用
+(create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
+(set-fontset-font "fontset-ricty"
+                  'unicode
+                  (font-spec :family "Ricty" :size 14)
+                  nil
+                  'append)
+(add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 
 ;;; *.~ とかのバックアップファイルを作らない
 (setq make-backup-files nil)
