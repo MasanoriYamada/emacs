@@ -189,6 +189,22 @@
 ;;; 自動的にバッファをリロード
 (global-auto-revert-mode 1)
 
+;;;対応する括弧を虹色にする
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+;;対応する括弧の色を美しく調整する
+(require 'cl-lib)
+(require 'color)
+(cl-loop
+ for index from 1 to rainbow-delimiters-max-face-count
+ do
+ (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
+   (cl-callf color-saturate-name (face-foreground face) 30)))
+
+;;;検索の一致した数を表示
+(global-anzu-mode +1)
+
 ;;;;===============================================================
 ;;;; set function
 ;;;;===============================================================
@@ -338,6 +354,10 @@
 
 ;;; make するときのオプションをしてい
 (setq compile-command "make ")
+
+;;;括弧を自動補完
+(require 'smartparens-config)
+(smartparens-global-mode t)
 
 ;括弧を使った時に自動で改行
 (setq c-auto-newline t)
