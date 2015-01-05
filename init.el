@@ -344,13 +344,22 @@
 
 
 ;;; flymake(シンタックスエラーをリアルタイムで検出)
+;(require 'flymake)
 
 ;; c/c++
-(add-hook 'c-mode-common-hook (lambda () (flymake-mode t)))
-;もし利用したいなら以下をMakefileに書いておく必要がある
-;PHONY: check-syntax
-;check-syntax:
-;    $(CXX) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
+;(add-hook 'c-mode-common-hook (lambda () (flymake-mode t)))
+;;もし利用したいなら以下をMakefileに書いておく必要がある
+;;PHONY: check-syntax
+;;check-syntax:
+;;    $(CXX) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
+
+;;;flychekc(シンタックスエラーをリアルタイムで検出)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;;flycheckのシンタックスエラーをその場に表示
+(eval-after-load 'flycheck
+  '(custom-set-variables
+   '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 ;;; make するときのオプションをしてい
 (setq compile-command "make ")
