@@ -12,8 +12,8 @@
 ;;;; テーマ
 ;;;;===============================================================
 
-(load-theme 'wheatgrass t)
-;(load-theme 'manoj-dark t)
+(load-theme 'wheatgrass t) ;; 緑
+;(load-theme 'manoj-dark t) ;;黒
 
 ;;;;===============================================================
 ;;;; global key bind
@@ -144,9 +144,12 @@
 ;;; hight light current line
 (global-hl-line-mode)
 
+;;MidightBlueに (http://life.a.la9.jp/hp/color/rgb-tab-pc.html)
+(set-face-background 'hl-line "MidnightBlue")
+
 ;;; add chomd excute at #! (sqript)
 (add-hook 'after-save-hook
-	  'executable-make-buffer-file-executable-if-script-p)
+          'executable-make-buffer-file-executable-if-script-p)
 
 ;;; 全角空白とタブに色を付ける
 (defface my-face-b-1 '((t (:background "gray"))) nil)
@@ -298,8 +301,15 @@
 ;;; GDB 関連
 ;;; 有用なバッファを開くモード
 (setq gdb-many-windows t)
-;;; 変数の上にマウスカーソルを置くと値を表示
+
+;; 変数の上にマウスカーソルを置くと値を表示
 (add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
+
+;;;gitで管理中のファイルを開く C-x f
+(require 'helm-ls-git)
+(define-key global-map (kbd "C-x f") nil)
+(global-set-key (kbd "C-x f") 'helm-ls-git-ls)
+
 
 ;;; 共通するシンボルはハイライト C-x C-aで単語をまとめて編集するモードへ
 (require 'auto-highlight-symbol)
