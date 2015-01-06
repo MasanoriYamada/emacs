@@ -90,14 +90,18 @@
 ;;; set color (not need after ver 22)
 (global-font-lock-mode t)
 
-;;; Ricty フォントの利用
+;;; Ricty フォントの利用 (Macのwindows systemを用いた場合のみ)
+(if (and (eq system-type 'darwin) (eq window-system 'ns))
+    (progn
+;; Cocoa Emacs固有の設定を書く
 (create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
 (set-fontset-font "fontset-ricty"
                   'unicode
-                  (font-spec :family "Ricty" :size 14)
+                  (font-spec :family "Ricty" :size 12)
                   nil
                   'append)
 (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
+))
 
 ;;; *.~ とかのバックアップファイルを作らない
 (setq make-backup-files nil)
