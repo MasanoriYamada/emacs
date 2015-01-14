@@ -55,8 +55,11 @@
 ;;; C-x p => helm
 (define-key global-map "\C-xp" 'helm-mini)
 
-;;; M-y => クリップボードの中身をみる
-(define-key global-map "\M-y" 'helm-show-kill-ring)
+;;; C-x y => クリップボードの中身をみる
+(define-key global-map "\C-xy" 'helm-show-kill-ring)
+
+;;; C-c y => スニペットを展開
+(define-key global-map "\C-cy" 'helm-yas-complete)
 
 ;;;comannd => meta at mac
 (setq mac-command-modifier 'meta)

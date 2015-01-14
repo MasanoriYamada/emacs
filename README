@@ -13,6 +13,8 @@
 
 C-h 		   :back space
 C-k 		   :kill-line
+C-x y		   :kil-ringの中をみて貼り付け
+C-c y		   :プログラムコードの補完
 M-x qrr 	   :置換
 C-c c 		   :コンパイル (後にC-x ` でコンパイルエラー箇所に飛ぶ)
 C-c d 		   :デバッグ
