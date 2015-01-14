@@ -55,6 +55,9 @@
 ;;; C-x p => helm
 (define-key global-map "\C-xp" 'helm-mini)
 
+;;; M-y => クリップボードの中身をみる
+(define-key global-map "\M-y" 'helm-show-kill-ring)
+
 ;;;comannd => meta at mac
 (setq mac-command-modifier 'meta)
 
@@ -188,6 +191,10 @@
 (global-undo-tree-mode t)
 (global-set-key (kbd "C-x u") 'undo-tree-redo)
 
+;;;バッファを閉じてもundoできるようにする
+(require 'undohist)
+(undohist-initialize)
+
 ;;; 行末のスペースを保存時に削除
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -195,7 +202,7 @@
 (setq require-final-newline t)
 
 ;;; 自動的にバッファをリロード
-(global-auto-revert-mode 1)
+(global-auto-revert-mode t)
 
 ;;;対応する括弧を虹色にする
 (require 'rainbow-delimiters)
@@ -211,7 +218,7 @@
    (cl-callf color-saturate-name (face-foreground face) 30)))
 
 ;;;検索の一致した数を表示
-(global-anzu-mode +1)
+(global-anzu-mode t)
 
 ;;;;===============================================================
 ;;;; set function
@@ -220,7 +227,7 @@
 ;;;タブを利用する(-nw enable)
 (add-to-list 'load-path "~/.emacs.d/tabbar")
 (require 'tabbar)
-(tabbar-mode 1)
+(tabbar-mode t)
 
 ;; 例: 全バッファを一つのグループにしまう
 (setq tabbar-buffer-groups-function (lambda () (list "Buffers")))
@@ -249,8 +256,12 @@
 ;; .mdのファイルをマークダウンモードで開く
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;;;;ファイルを開くときにdired-modeを起動
+;;;ファイルを開くときにdired-modeを起動
 (ffap-bindings)
+
+;;;同じファイル名はディレクトリまで表示する
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
 ;;; M-qrr 高機能な置換モード
 
@@ -270,7 +281,7 @@
 ;;;;===============================================================
 
 (require 'helm-config)
-(helm-mode 1)
+(helm-mode t)
 
 ;;;;======================================================================
 ;;;; magit(git from emacs)
@@ -323,7 +334,7 @@
 
 ;;; スニペット(コード補完)
 (require 'yasnippet)
-(yas-global-mode 1)
+(yas-global-mode t)
 
 
 ;;; ポップイン
@@ -332,7 +343,7 @@
 
 
 ;;; ウィンドウの上部に現在の関数名を表示
-(which-function-mode 1)
+(which-function-mode t)
 
 ;;;googleのc/c++のルールに順守
 (require 'google-c-style)

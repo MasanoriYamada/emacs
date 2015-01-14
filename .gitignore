@@ -2,5 +2,6 @@
 backup/*
 elpa/*
 auto-save-list/*
+undohist/*
 #*
 ac-comphist.dat
