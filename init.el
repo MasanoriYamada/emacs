@@ -117,6 +117,14 @@
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
 
+;;; vcを起動しないようにする(軽くするため)
+(custom-set-variables
+ '(vc-handled-backends nil))
+
+;; 不要なhookを外す
+(remove-hook 'find-file-hook 'vc-find-file-hook)
+(remove-hook 'kill-buffer-hook 'vc-kill-buffer-hook)
+
 ;;; set length of tab is 4
 (setq tab-width 4)
 
@@ -242,16 +250,16 @@
 (setq tabbar-buffer-groups-function (lambda () (list "Buffers")))
 (defun my-tabbar-buffer-list ()
   (delq nil
-	(mapcar #'(lambda (b)
-		    (cond
-		     ;; Always include the current buffer.
-		     ((eq (current-buffer) b) b)
-		     ((buffer-file-name b) b)
-		     ((char-equal ?\  (aref (buffer-name b) 0)) nil)
-			  ((equal "*scratch*" (buffer-name b)) b) ; *scratch*バッファは表示する
-			       ((char-equal ?* (aref (buffer-name b) 0)) nil) ; それ以外の * で始まるバッファは表示しない
-		     ((buffer-live-p b) b)))
-		(buffer-list))))
+        (mapcar #'(lambda (b)
+                   (cond
+                    ;; Always include ;TODO: he current buffer.
+                    ((eq (current-buffer) b) b)
+                    ((buffer-file-name b) b)
+                    ((char-equal ?\  (aref (buffer-name b) 0)) nil)
+                    ((equal "*scratch*" (buffer-name b)) b) ; *scratch*バッファは表示する
+                    ((char-equal ?* (aref (buffer-name b) 0)) nil) ; それ以外の * で始まるバッファは表示しない
+                    ((buffer-live-p b) b)))
+               (buffer-list))))
 (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
 
 ;;タブの移動のキーバインドの設定
