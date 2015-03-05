@@ -412,7 +412,7 @@
 (smartparens-global-mode t)
 
 ;括弧を使った時に自動で改行
-(setq c-auto-newline t)
+;(setq c-auto-newline t)
 
 ;;;空白を一発削除
 (setq c-hungry-delete-key t)
