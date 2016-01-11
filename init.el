@@ -41,7 +41,7 @@
 (define-key mode-specific-map "d" 'gdb)
 
 ;;; C-c s => shell
-(define-key mode-specific-map "s" 'ansi-term)
+;(define-key mode-specific-map "s" 'ansi-term)
 
 ;;; C-c w => delete whitespace
 (define-key mode-specific-map "w" 'delete-trailing-whitespace)
@@ -91,7 +91,7 @@
 (setq inhibit-startup-message t)
 
 ;;; 起動時にスクリーン最大化
-(set-frame-parameter nil 'fullscreen 'maximized)
+;(set-frame-parameter nil 'fullscreen 'maximized)
 
 ;;; set color (not need after ver 22)
 (global-font-lock-mode t)
@@ -235,7 +235,7 @@
    (cl-callf color-saturate-name (face-foreground face) 30)))
 
 ;;;検索の一致した数を表示
-(global-anzu-mode t)
+;(global-anzu-mode t)
 
 ;;;;===============================================================
 ;;;; set function
@@ -399,10 +399,17 @@
 ;;;flychekc(シンタックスエラーをリアルタイムで検出)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-;;flycheckのシンタックスエラーをその場に表示
-(eval-after-load 'flycheck
-  '(custom-set-variables
-   '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+(when (require 'flycheck nil 'noerror)
+  (custom-set-variables
+   ;; エラーをポップアップで表示
+   '(flycheck-display-errors-function
+     (lambda (errors)
+       (let ((messages (mapcar #'flycheck-error-message errors)))
+         (popup-tip (mapconcat 'identity messages "\n")))))
+   '(flycheck-display-errors-delay 0.5))
+  (define-key flycheck-mode-map (kbd "C-M-n") 'flycheck-next-error)
+  (define-key flycheck-mode-map (kbd "C-M-p") 'flycheck-previous-error)
+  (add-hook 'c-mode-common-hook 'flycheck-mode))
 
 ;;; make するときのオプションをしてい
 (setq compile-command "make ")
@@ -421,5 +428,5 @@
 (setq shell-pop-shell-type '("eshell" "*eshell*" (lambda () (eshell))))
 ;; (setq shell-pop-shell-type '("shell" "*shell*" (lambda () (shell))))
 ;; (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda () (term shell-pop-term-shell))))
-;; (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
+;;(setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
 (global-set-key (kbd "C-c s") 'shell-pop)
