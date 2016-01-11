@@ -90,6 +90,12 @@
 ;;; 起動時の画面はいらない
 (setq inhibit-startup-message t)
 
+;;; ツールバーを非表示
+(tool-bar-mode -1)
+
+;;; メニューバーを非表示
+(menu-bar-mode -1)
+
 ;;; 起動時にスクリーン最大化
 ;(set-frame-parameter nil 'fullscreen 'maximized)
 
