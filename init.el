@@ -61,6 +61,9 @@
 ;;; C-c y => スニペットを展開
 (define-key global-map "\C-cy" 'helm-yas-complete)
 
+;;; C-e => 選択領域に登録マクロを実行
+(define-key global-map "\C-e" 'apply-macro-to-region-lines)
+
 ;;;comannd => meta at mac
 (setq mac-command-modifier 'meta)
 
@@ -120,8 +123,8 @@
 
 ;;; create auto-save file in ~/.emacs.d/backup
 ;; backupから復元したいときはM-x recover-file その後元ファイルを指定すれば良い
-(setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
+;(setq auto-save-file-name-transforms
+;      `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
 
 ;;; vcを起動しないようにする(軽くするため)
 (custom-set-variables
@@ -436,3 +439,7 @@
 ;; (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda () (term shell-pop-term-shell))))
 ;;(setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
 (global-set-key (kbd "C-c s") 'shell-pop)
+
+;;;eshellにターミナルの環境変数を読み込む
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
