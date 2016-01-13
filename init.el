@@ -8,6 +8,9 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
+;;;;ロードパスを追加(パッケージ管理lispに登録されていないものを手動で入れたlisp用のパスを追加)
+(setq load-path (cons "~/.emacs.d/elpa/site-lisp/" load-path))
+
 ;;;;===============================================================
 ;;;; テーマ
 ;;;;===============================================================
@@ -301,6 +304,11 @@
 (require 'recentf-ext)
 (setq recentf-max-saved-items 100) ; 100個まで履歴として保存
 (global-set-key (kbd "C-x C-r") 'helm-recentf)
+
+;;; dmacro.el の設定  キー操作の繰り返しを C-t で
+(defconst *dmacro-key* "\C-t" "繰返し指定キー")
+(global-set-key *dmacro-key* 'dmacro-exec)
+(autoload 'dmacro-exec "dmacro" nil t)
 
 ;;;;===============================================================
 ;;;; helm(anythingの後継機)
