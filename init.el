@@ -310,6 +310,10 @@
 (global-set-key *dmacro-key* 'dmacro-exec)
 (autoload 'dmacro-exec "dmacro" nil t)
 
+;;; 一時的なメモ帳を開く C-c j
+(setq open-junk-file-format "~/.emacs.d/junk/%Y/%m/%Y-%m-%d-%H%M%S.")
+(global-set-key (kbd "C-c j") 'open-junk-file)
+
 ;;;;===============================================================
 ;;;; helm(anythingの後継機)
 ;;;;===============================================================
